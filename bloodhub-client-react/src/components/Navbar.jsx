@@ -14,6 +14,9 @@ const Navbar = () => {
         { href: '/', label: 'Home' },
         { href: '/about', label: 'About Us' },
         { href: '/contact', label: 'Contact' },
+        { href: '/donors', label: 'Donors' },
+        { href: '/login', label: 'Login' },
+        // { href: '/contact', label: 'Contact' },
     ];
 
     const linkClass = "text-gray-600 hover:text-red-600 transition-colors duration-300 font-medium";
@@ -22,7 +25,7 @@ const Navbar = () => {
     return (
         <nav className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
             <div className="container mx-auto px-6 py-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-around">
                     {/* <Logo/> */}
 
                     {/* Desktop Menu */}

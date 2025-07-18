@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 // --- Create a new user (for admin) with DEBUG LOGS ---
 exports.createUser = async (req, res) => {
     try {
-        const { username, email, password, isDonor, bloodType, location, role, accountStatus } = req.body;
+        const { username, email, password, isDonor, bloodType, contact,thana,district,division, role, accountStatus } = req.body;
 
         if (!username || !email || !password) {
             return res.status(400).json({ message: 'Username, email, and password are required.' });
@@ -24,10 +24,15 @@ exports.createUser = async (req, res) => {
         const newUser = new User({
             username,
             email,
+            contact,
+            thana,
+            district,
+            division,   
             password: hashedPassword,
             isDonor: isDonor || false,
             bloodType: isDonor ? bloodType : null,
-            location: isDonor ? location : null,
+            photo: '', // Default photo URL can be set later
+            availability: 'Available', // Default availability  
             role: role || 'user',
             accountStatus: accountStatus || 'active'
         });
@@ -49,6 +54,7 @@ exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find().select('-password');
         res.json(users);
+        // console.log(users)
     } catch (error) {
         res.status(500).json({ message: 'Error fetching users.', error: error.message });
     }

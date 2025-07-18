@@ -5,10 +5,13 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true, trim: true },
     email: { type: String, required: true, unique: true, trim: true },
+    contact: { type: String, trim: true },
     password: { type: String, required: true },
     isDonor: { type: Boolean, default: false },
     bloodType: { type: String, enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', null] },
-    location: { type: String, trim: true },
+    division: { type: String, trim: true },
+    district: { type: String, trim: true },
+    thana: { type: String, trim: true },
     availability: { type: String, enum: ['Available', 'Unavailable'], default: 'Available' },
     photo: { type: String, default: '' }, // URL to a photo
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
