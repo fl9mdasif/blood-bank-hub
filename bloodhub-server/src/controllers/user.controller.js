@@ -8,9 +8,9 @@ exports.searchDonors = async (req, res) => {
         const { bloodType, location, availability } = req.query;
         let filter = { isDonor: true, accountStatus: 'active' };
 
-        if (bloodType) filter.bloodType = bloodType;
+        if (bloodType) filter.bloodType = new RegExp(bloodType, 'i') ;
         if (location) filter.location = new RegExp(location, 'i');
-        if (availability) filter.availability = availability;
+        if (availability) filter.availability =  new RegExp(availability, 'i');
 
         const donors = await User.find(filter).select('-password -email');
         res.json(donors);
