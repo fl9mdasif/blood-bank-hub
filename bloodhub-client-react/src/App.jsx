@@ -16,6 +16,10 @@ import RequestsToMe from './components/dashboard/RequestsToMe';
 import MyRequests from './components/dashboard/MyRequests';
 import ChangePassword from './components/dashboard/ChangePassword';
 import PrivateRoute from './components/PrivateRoute';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import DashboardOverview from './components/admin/DashboardOverview';
+import UserManagement from './components/admin/UserManagement';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
 
@@ -51,6 +55,16 @@ function App() {
                 <Route path="change-password" element={<ChangePassword />} />
               </Route>
             </Route>
+
+ {/* Private Admin Routes */}
+            <Route element={<AdminRoute />}>
+                <Route path="/admin" element={<AdminDashboardPage />}>
+                    <Route index element={<Navigate to="overview" replace />} />
+                    <Route path="overview" element={<DashboardOverview />} />
+                    <Route path="users" element={<UserManagement />} />
+                </Route>
+            </Route>
+
 
           </Routes>
         </main>
