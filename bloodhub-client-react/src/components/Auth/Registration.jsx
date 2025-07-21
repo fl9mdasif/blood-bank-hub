@@ -38,6 +38,7 @@ const RegistrationPage = () => {
         setError('');
         setLoading(true);
 
+        console.log('reg',formData)
         // Create a clean payload object from the state to ensure data integrity
         const payload = {
             username: formData.username.trim(),
@@ -134,7 +135,7 @@ const RegistrationPage = () => {
                             </div>
                             <div className="md:col-span-2">
                                 <label className="block text-gray-700 font-medium mb-2">Profile Picture URL</label>
-                                <input name="photo" type="text" placeholder="https://example.com/image.png" onChange={handleChange} className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-500 transition" />
+                                <input name="photo" type="text" placeholder="https://example.com/image.png" onChange={handleChange} className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-200 focus:border-red-500 transition "required />
                             </div>
                         </div>
                         

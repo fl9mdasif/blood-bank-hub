@@ -8,7 +8,7 @@ const JWT_SECRET = process.env.JWT_ACCESS_SECRET ;
 // --- Register a new user ---
 exports.register = async (req, res) => {
     try {
-        const { username, email, password,contact, isDonor, bloodType, division,thana, district, } = req.body;
+        const { username, email, password,contact,photo, isDonor, bloodType, division,thana, district, } = req.body;
 
         const existingUser = await User.findOne({ $or: [{ email }, { username }] });
         if (existingUser) {
@@ -28,6 +28,7 @@ exports.register = async (req, res) => {
             district,
             thana,
             bloodType: isDonor ? bloodType : null,
+            photo
             // location: isDonor ? location : null
         });
 

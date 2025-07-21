@@ -32,8 +32,11 @@ const ChangePassword = () => {
             setMessage(response.data.message);
             setFormData({ currentPassword: '', newPassword: '' }); // Clear form
         } catch (err) {
+            console.log('check error', err);
+
+            
             if (err.response && err.response.data) {
-                setError(err.response.data.error || 'Failed to change password.');
+                setError(err.response.data.message || 'Failed to change password.');
             } else {
                 setError('An error occurred. Please try again.');
             }

@@ -9,7 +9,7 @@ exports.searchDonors = async (req, res) => {
         let filter = { isDonor: true, accountStatus: 'active' };
 
         if (bloodType) filter.bloodType = new RegExp(bloodType, 'i') ;
-        if (location) filter.division = new RegExp(division, 'i');
+        if (division) filter.division = new RegExp(division, 'i');
         if (availability) filter.availability =  new RegExp(availability, 'i');
 
         const donors = await User.find(filter).select('-password -email');

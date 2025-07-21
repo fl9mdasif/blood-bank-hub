@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     district: { type: String,required:true },
     thana: { type: String,required:true, trim: true },
     availability: { type: String, enum: ['Available', 'Unavailable'], default: 'Available' },
-    photo: { type: String, trim:true }, // URL to a photo
+    photo: { type: String }, // URL to a photo
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     accountStatus: { type: String, enum: ['active', 'deactivated'], default: 'active' }
 }, { timestamps: true });
