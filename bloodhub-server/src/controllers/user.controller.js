@@ -5,11 +5,11 @@ const bcrypt = require('bcryptjs');
 // --- Search and filter donors ---
 exports.searchDonors = async (req, res) => {
     try {
-        const { bloodType, location, availability } = req.query;
+        const { bloodType, division,thana, district, availability } = req.query;
         let filter = { isDonor: true, accountStatus: 'active' };
 
         if (bloodType) filter.bloodType = new RegExp(bloodType, 'i') ;
-        if (location) filter.location = new RegExp(location, 'i');
+        if (location) filter.division = new RegExp(division, 'i');
         if (availability) filter.availability =  new RegExp(availability, 'i');
 
         const donors = await User.find(filter).select('-password -email');
@@ -52,8 +52,8 @@ exports.getProfile = async (req, res) => {
 // --- Update user profile ---
 exports.updateProfile = async (req, res) => {
     try {
-        const { username, email, isDonor, bloodType, location, availability, photo } = req.body;
-        const updatedData = { username, email, isDonor, bloodType, location, availability, photo };
+        const { username, email, isDonor, bloodType, division,thana, district, availability, photo } = req.body;
+        const updatedData = { username, email, isDonor, bloodType, division,thana, district, availability, photo };
         
         const user = await User.findByIdAndUpdate(req.user.id, updatedData, { new: true }).select('-password');
         res.json({ message: 'Profile updated successfully.', user });

@@ -5,15 +5,15 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true, trim: true },
     email: { type: String, required: true, unique: true, trim: true },
-    contact: { type: String, trim: true },
+    contact: { type: String, required:true, },
     password: { type: String, required: true },
     isDonor: { type: Boolean, default: false },
-    bloodType: { type: String, enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', null] },
-    division: { type: String, trim: true },
-    district: { type: String, trim: true },
-    thana: { type: String, trim: true },
+    bloodType: { type: String, required:true, enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', null] },
+    division: { type: String,required:true },
+    district: { type: String,required:true },
+    thana: { type: String,required:true, trim: true },
     availability: { type: String, enum: ['Available', 'Unavailable'], default: 'Available' },
-    photo: { type: String, default: '' }, // URL to a photo
+    photo: { type: String, trim:true }, // URL to a photo
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     accountStatus: { type: String, enum: ['active', 'deactivated'], default: 'active' }
 }, { timestamps: true });

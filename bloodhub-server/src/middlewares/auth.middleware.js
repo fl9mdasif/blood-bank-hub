@@ -2,6 +2,7 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = process.env.JWT_ACCESS_SECRET
 
+// console.log(JWT_SECRET)
 // --- Custom Middleware for JWT Authentication ---
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];

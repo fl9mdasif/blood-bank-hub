@@ -1,8 +1,8 @@
+require('dotenv').config(); // To manage environment variables from a .env file
  
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config(); // To manage environment variables from a .env file
 
 // Import the main router which combines all other route files
 const mainRouter = require('./src/routes'); 
@@ -11,6 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.DATABASE_URL
 
+// console.log("JWT Secret Loaded on Server:", process.env.JWT_ACCESS_SECRET); // Add this line
 
 app.use(cors()); 
 

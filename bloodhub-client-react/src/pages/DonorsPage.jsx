@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Search, Heart, Map, ChevronDown } from 'lucide-react';
-import DonorCard from '../components/DonorCard';
+import DonorCard from './DonorCard';
 
 const mockDonors = [
     { id: 1, name: 'Abdullah Al Mamun', bloodGroup: 'A+', location: 'Dhaka', available: true, image: 'https://i.pravatar.cc/150?u=1', joined: '2023-05-12', totalDonations: 5 },

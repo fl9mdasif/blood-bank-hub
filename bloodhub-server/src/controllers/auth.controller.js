@@ -2,12 +2,13 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET || 'a-very-strong-and-secret-key-for-dev';
+
+const JWT_SECRET = process.env.JWT_ACCESS_SECRET ;
 
 // --- Register a new user ---
 exports.register = async (req, res) => {
     try {
-        const { username, email, password, isDonor, bloodType, location } = req.body;
+        const { username, email, password,contact, isDonor, bloodType, division,thana, district, } = req.body;
 
         const existingUser = await User.findOne({ $or: [{ email }, { username }] });
         if (existingUser) {
@@ -20,10 +21,14 @@ exports.register = async (req, res) => {
         const newUser = new User({
             username,
             email,
+            contact,
             password: hashedPassword,
             isDonor,
+            division,
+            district,
+            thana,
             bloodType: isDonor ? bloodType : null,
-            location: isDonor ? location : null
+            // location: isDonor ? location : null
         });
 
         await newUser.save();

@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-// import Logo from '../components/Logo'; // Assuming Logo component is in ../components/
+import { Link, useNavigate } from 'react-router-dom';
+// import Logo from '../components/Logo'; // Make sure this path is correct
+import api from '../../api/axios'; // Import the central axios instance
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,11 +20,38 @@ const LoginPage = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // In a real app, you would send this data to your API for authentication
-        console.log('Login Form Submitted:', formData);
-        alert(`Attempting to log in with email: ${formData.email}`);
+        setError('');
+        setLoading(true);
+
+        try {
+            // Use the 'api' instance to make the POST request
+            const response = await api.post('/auth/login', formData);
+            
+            // Extract the token from the server's response
+            const { token } = response.data;
+
+            // Store the token in localStorage for future authenticated requests
+            localStorage.setItem('token', token);
+
+            // Redirect the user to their dashboard upon successful login
+            navigate('/dashboard');
+
+            console.log('Token',token)
+
+        } catch (err) {
+            // Handle errors from the API (e.g., wrong password, user not found)
+            if (err.response && err.response.data) {
+                setError(err.response.data.message || 'Login failed. Please check your credentials.');
+            } else {
+                // Handle network errors or other issues
+                setError('Login failed. Please check your connection and try again.');
+            }
+        } finally {
+            // Stop the loading indicator regardless of success or failure
+            setLoading(false);
+        }
     };
 
     return (
@@ -29,7 +60,7 @@ const LoginPage = () => {
                 <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
                     {/* Header */}
                     <div className="text-center mb-8">
-                        {/* <Logo /> */}BloodHub 
+                        {/* <Logo /> */}
                         <h2 className="mt-4 text-3xl font-extrabold text-gray-800">Welcome Back!</h2>
                         <p className="text-gray-500 mt-2">Log in to continue your journey.</p>
                     </div>
@@ -65,13 +96,17 @@ const LoginPage = () => {
                             />
                         </div>
                         
+                        {/* Display error message if login fails */}
+                        {error && <p className="text-sm text-center text-red-600 bg-red-100 p-3 rounded-lg">{error}</p>}
+
                         {/* Submit Button */}
                         <div>
                             <button 
                                 type="submit" 
-                                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md hover:shadow-lg mt-4"
+                                disabled={loading}
+                                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg transition duration-300 shadow-md hover:shadow-lg mt-4 disabled:bg-gray-400 disabled:cursor-not-allowed"
                             >
-                                Log In
+                                {loading ? 'Logging in...' : 'Log In'}
                             </button>
                         </div>
                     </form>
