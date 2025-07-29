@@ -8,6 +8,8 @@ exports.searchDonors = async (req, res) => {
         const { bloodType, division,thana, district, availability } = req.query;
         let filter = { isDonor: true, accountStatus: 'active' };
 
+        if (thana) filter.thana = new RegExp(thana, 'i') ;
+        if (district) filter.district = new RegExp(district, 'i') ;
         if (bloodType) filter.bloodType = new RegExp(bloodType, 'i') ;
         if (division) filter.division = new RegExp(division, 'i');
         if (availability) filter.availability =  new RegExp(availability, 'i');

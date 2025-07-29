@@ -158,7 +158,7 @@ const LoginPage = () => {
             // Decode the token to check the user's role
             const decodedToken = jwtDecode(token);
             if (decodedToken.role === 'admin') {
-                navigate('/admin/overview'); // Redirect admins
+                navigate('/admin'); // Redirect admins
             } else {
                 navigate('/dashboard/profile'); // Redirect regular users
             }
