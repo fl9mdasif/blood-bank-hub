@@ -13,7 +13,7 @@ const AboutPage = () => (
             <div className="grid md:grid-cols-2 gap-16 items-center">
                 <div className="relative">
                     <div className="absolute -top-4 -left-4 w-full h-full bg-blue-400 rounded-lg transform -rotate-3 z-0"></div>
-                    <img src="https://images.unsplash.com/photo-1582719478212-c857e5400ce3?q=80&w=2070&auto=format&fit=crop" alt="Community of helpers" className="relative w-full rounded-lg shadow-2xl z-10" />
+                    <img src="https://spectrumam.com/wp-content/uploads/2020/04/Local-Blood-Donations-2.png" alt="Community of helpers" className="relative w-full rounded-lg shadow-2xl z-10" />
                 </div>
                 <div>
                     <h2 className="text-3xl font-bold text-gray-800 mb-6">আমাদের পথচলা</h2>
