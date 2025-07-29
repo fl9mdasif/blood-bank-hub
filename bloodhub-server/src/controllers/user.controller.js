@@ -1,4 +1,5 @@
-// controllers/user.controller.js
+// src/controllers/user.controller.js
+const BloodRequest = require('../models/bloodRequest.model');
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 
@@ -10,9 +11,9 @@ exports.searchDonors = async (req, res) => {
 
         if (thana) filter.thana = new RegExp(thana, 'i') ;
         if (district) filter.district = new RegExp(district, 'i') ;
-        if (bloodType) filter.bloodType = new RegExp(bloodType, 'i') ;
+        if (bloodType) filter.bloodType = bloodType; // Exact match is better for blood type
         if (division) filter.division = new RegExp(division, 'i');
-        if (availability) filter.availability =  new RegExp(availability, 'i');
+        if (availability) filter.availability =  availability;
 
         const donors = await User.find(filter).select('-password -email');
         res.json(donors);
@@ -24,14 +25,12 @@ exports.searchDonors = async (req, res) => {
 // --- Get a single donor's details ---
 exports.getDonorDetails = async (req, res) => {
     const donorId = req.params.id;
-    console.log(donorId)
     try {
-        const donor = await User.findById(donorId)
-        // .select('username photo bloodType location availability');
+        const donor = await User.findById(donorId).select('-password'); // Hide password
         
         if (!donor || !donor.isDonor) {
-    return res.status(404).json({ message: 'Donor not found.' });
-    }
+            return res.status(404).json({ message: 'Donor not found.' });
+        }
         res.json(donor);
     } catch (error) {
         res.status(500).json({ message: 'Error fetching donor details.', error: error.message });
@@ -51,7 +50,7 @@ exports.getProfile = async (req, res) => {
     }
 };
 
-// --- Update user profile ---
+// --- Update user profile ---  <- THIS FUNCTION IS NOW UNCOMMENTED
 exports.updateProfile = async (req, res) => {
     try {
         const { username, email, isDonor, bloodType, division,thana, district, availability, photo } = req.body;
@@ -84,4 +83,3 @@ exports.changePassword = async (req, res) => {
         res.status(500).json({ message: 'Error changing password.', error: error.message });
     }
 };
-

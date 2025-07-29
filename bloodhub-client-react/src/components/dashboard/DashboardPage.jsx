@@ -31,14 +31,16 @@ const DashboardPage = () => {
     // Define links for different roles
     const userLinks = [
         { to: '/dashboard/profile', icon: User, label: 'My Profile' },
-        { to: '/dashboard/requests-to-me', icon: Heart, label: 'Requests for Blood' },
-        { to: '/dashboard/my-requests', icon: Heart, label: 'My Blood Requests' },
+        { to: '/dashboard/my-requests', icon: Heart, label: 'My Requests' },
+        { to: '/dashboard/requests-to-me', icon: Heart, label: 'Users Requests To Me' },
         { to: '/dashboard/change-password', icon: Lock, label: 'Change Password' },
     ];
 
     const adminLinks = [
         { to: '/dashboard/overview', icon: LayoutDashboard, label: 'Overview' },
         { to: '/dashboard/users', icon: User, label: 'User Management' },
+        // { to: '/dashboard/requests-to-me', icon: Heart, label: 'Requests for Blood' },
+
     ];
 
     // Combine links based on role

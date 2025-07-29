@@ -1,5 +1,6 @@
 // controllers/request.controller.js
 const BloodRequest = require('../models/bloodRequest.model');
+const User = require('../models/user.model');
 
 // --- Create a blood request ---
 exports.createRequest = async (req, res) => {
@@ -42,6 +43,28 @@ exports.getRequestsToMe = async (req, res) => {
 };
 
 // --- Update request status (approve/reject) ---
+// exports.updateRequestStatus = async (req, res) => {
+//     try {
+//         const { status } = req.body; // 'approved' or 'rejected'
+//         const request = await BloodRequest.findById(req.params.id);
+
+//         if (!request) {
+//             return res.status(404).json({ message: 'Request not found.' });
+//         }
+
+//         if (request.donor.toString() !== req.user.id) {
+//             return res.status(403).json({ message: 'You are not authorized to update this request.' });
+//         }
+
+//         request.status = status;
+//         await request.save();
+//         res.json({ message: `Request ${status}.`, request });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error updating request status.', error: error.message });
+//     }
+// };
+
+
 exports.updateRequestStatus = async (req, res) => {
     try {
         const { status } = req.body; // 'approved' or 'rejected'
@@ -57,10 +80,17 @@ exports.updateRequestStatus = async (req, res) => {
 
         request.status = status;
         await request.save();
+
+        // 2. ADD THIS NEW LOGIC:
+        // If the request was approved, find the donor and update their availability.
+        if (status === 'approved') {
+            await User.findByIdAndUpdate(request.donor, {
+                availability: 'Unavailable'
+            });
+        }
+
         res.json({ message: `Request ${status}.`, request });
     } catch (error) {
         res.status(500).json({ message: 'Error updating request status.', error: error.message });
     }
 };
-
-

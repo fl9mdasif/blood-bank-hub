@@ -20,6 +20,8 @@ import RequestsToMe from './components/dashboard/user/RequestsToMe';
 import MyRequests from './components/dashboard/user/MyRequests';        
 import ChangePassword from './components/dashboard/user/ChangePassword';      
 import Profile from './components/dashboard/user/Profile';
+import BloodRequestModal from './components/dashboard/BloodRequestModal';
+
 
 function App() {
 
@@ -41,7 +43,11 @@ function App() {
             
             {/* Add other routes here */}
             <Route path="/donors" element={<DonorsPage />} />
+
+            <Route element={<PrivateRoute />}>
             <Route path="/donors/:id" element={<DonorDetailsPage />} />
+            <Route path="/request-for-blood" element={<BloodRequestModal />} />
+            </Route>
 
             {/* Private User & Admin Routes are now merged under a single protected route */}
             <Route element={<PrivateRoute />}>
