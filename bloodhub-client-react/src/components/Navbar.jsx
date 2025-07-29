@@ -1,24 +1,42 @@
-import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import Logo from './Logo';
-import { Menu, X, Droplet, Heart, Users, Target, Phone, Mail, MapPin } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+// import Logo from './Logo';
+import { Menu, X, LogOut } from 'lucide-react';
+
 // Utility function to conditionally join class names
-function cn(...classes) {
-    return classes.filter(Boolean).join(' ');
-}
+const cn = (...classes) => classes.filter(Boolean).join(' ');
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation(); // Hook to detect route changes
 
-    const navLinks = [
+    // Check login status whenever the component mounts or the route changes
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token);
+    }, [location]); // Dependency array includes location to re-check on navigation
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setIsLoggedIn(false);
+        setIsOpen(false); // Close mobile menu on logout
+        navigate('/login');
+    };
+
+    const baseLinks = [
         { href: '/', label: 'Home' },
         { href: '/donors', label: 'Donors' },
-        { href: '/dashboard', label: 'Dashboard' },
         { href: '/about', label: 'About Us' },
         { href: '/contact', label: 'Contact' },
-        { href: '/login', label: 'Login' },
-        // { href: '/contact', label: 'Contact' },
     ];
+
+    const authLinks = isLoggedIn
+        ? [{ href: '/dashboard', label: 'Dashboard' }]
+        : [{ href: '/login', label: 'Login' }];
+
+    const navLinks = [...baseLinks, ...authLinks];
 
     const linkClass = "text-gray-600 hover:text-red-600 transition-colors duration-300 font-medium";
     const activeLinkClass = "text-red-600";
@@ -26,8 +44,8 @@ const Navbar = () => {
     return (
         <nav className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
             <div className="container mx-auto px-6 py-4">
-                <div className="flex items-center justify-around">
-                    {/* <Logo/> */}
+                <div className="flex items-center justify-between">
+                    {/* <Logo /> */}
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8">
@@ -40,9 +58,15 @@ const Navbar = () => {
                                 {link.label}
                             </NavLink>
                         ))}
-                        <Link to="/register" className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg">
-                            Become a Donor
-                        </Link>
+                        {isLoggedIn ? (
+                            <button onClick={handleLogout} className="flex items-center text-gray-600 hover:text-red-600 transition-colors duration-300 font-medium">
+                                <LogOut size={18} className="mr-2" /> Logout
+                            </button>
+                        ) : (
+                            <Link to="/register" className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full transition-colors duration-300 shadow-md hover:shadow-lg">
+                                Become a Donor
+                            </Link>
+                        )}
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -67,9 +91,15 @@ const Navbar = () => {
                                     {link.label}
                                 </NavLink>
                             ))}
-                            <Link to="/register" onClick={() => setIsOpen(false)} className="w-full text-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-5 rounded-full transition-colors duration-300 mt-2 shadow-lg">
-                                Become a Donor
-                            </Link>
+                            {isLoggedIn ? (
+                                <button onClick={handleLogout} className="w-full text-center flex items-center justify-center bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-5 rounded-full transition-colors duration-300 mt-2 shadow-lg">
+                                    <LogOut size={20} className="mr-2" /> Logout
+                                </button>
+                            ) : (
+                                <Link to="/register" onClick={() => setIsOpen(false)} className="w-full text-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-5 rounded-full transition-colors duration-300 mt-2 shadow-lg">
+                                    Become a Donor
+                                </Link>
+                            )}
                         </div>
                     </div>
                 )}

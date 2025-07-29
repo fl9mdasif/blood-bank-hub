@@ -29,7 +29,7 @@ const Footer = () => {
                         <h3 className="font-bold text-white text-lg mb-4">Contact Us</h3>
                         <ul className="space-y-3 text-gray-400">
                             <li className="flex items-center"><MapPin className="mr-3 text-red-500" size={20} /><span>Dhaka, Bangladesh</span></li>
-                            <li className="flex items-center"><Mail className="mr-3 text-red-500" size={20} /><a href="mailto:support@bloodhub.com" className="hover:text-red-500">asifalazad.fullstack@gmail.com</a></li>
+                            <li className="flex items-center"><Mail className="mr-3 text-red-500" size={20} /><a href="mailto:asifalazad.fullstack@gmail.com" className="hover:text-red-500">asifalazad.fullstack@gmail.com</a></li>
                             <li className="flex items-center"><Phone className="mr-3 text-red-500" size={20} /><a href="tel:+880123456789" className="hover:text-red-500">+880 605 855875</a></li>
                         </ul>
                     </div>
