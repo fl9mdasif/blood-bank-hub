@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import api from '../../api/axios';
+import api from '../../../api/axios';
 import { User, Mail, Phone, MapPin, Droplet, CheckCircle } from 'lucide-react';
 
 const Profile = () => {

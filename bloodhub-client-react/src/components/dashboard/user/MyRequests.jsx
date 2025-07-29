@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
+// /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import api from '../../api/axios';
+import api from '../../../api/axios';
 
 const cn = (...classes) => classes.filter(Boolean).join(' ');
 

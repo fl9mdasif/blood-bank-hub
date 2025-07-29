@@ -8,7 +8,6 @@ import api from '../api/axios'; // Import the central axios instance
 const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
 const divisions = ['Dhaka', 'Chittagong', 'Sylhet', 'Rajshahi', 'Khulna', 'Barisal', 'Rangpur', 'Mymensingh'];
 
-// eslint-disable-next-line no-unused-vars
 const CustomSelect = ({ icon: Icon, options, placeholder, onChange }) => (
     <div className="relative w-full">
         <Icon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />

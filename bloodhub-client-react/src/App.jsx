@@ -10,16 +10,16 @@ import Registration from './components/Auth/Registration';
 import Login from './components/Auth/Login';
 import DonorsPage from './pages/DonorsPage';
 import DonorDetailsPage from './pages/DonorDetailsPage';
-import DashboardPage from './pages/DashboardPage';
-import Profile from './components/dashboard/Profile';
-import RequestsToMe from './components/dashboard/RequestsToMe';
-import MyRequests from './components/dashboard/MyRequests';
-import ChangePassword from './components/dashboard/ChangePassword';
 import PrivateRoute from './components/PrivateRoute';
-import AdminDashboardPage from './pages/AdminDashboardPage';
-import DashboardOverview from './components/admin/DashboardOverview';
-import UserManagement from './components/admin/UserManagement';
-import AdminRoute from './components/AdminRoute';
+import DashboardOverview from './components/dashboard/admin/DashboardOverview';
+import UserManagement from './components/dashboard/admin/UserManagement';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsOfServicePage from './pages/TermsOfServicePage';
+import DashboardPage from './components/dashboard/DashboardPage';        
+import RequestsToMe from './components/dashboard/user/RequestsToMe';        
+import MyRequests from './components/dashboard/user/MyRequests';        
+import ChangePassword from './components/dashboard/user/ChangePassword';      
+import Profile from './components/dashboard/user/Profile';
 
 function App() {
 
@@ -36,33 +36,29 @@ function App() {
             <Route path="/" element={<HomePage/>} />
             <Route path="/about" element={<AboutPage/>} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage/>} />
+            <Route path="/terms-of-services" element={<TermsOfServicePage/>} />
+            
             {/* Add other routes here */}
             <Route path="/donors" element={<DonorsPage />} />
             <Route path="/donors/:id" element={<DonorDetailsPage />} />
 
-            {/* Private Routes - Corrected Structure */}
+            {/* Private User & Admin Routes are now merged under a single protected route */}
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<DashboardPage />}>
-                {/* Redirect /dashboard to /dashboard/profile */}
+                {/* Default route for the dashboard */}
                 <Route index element={<Navigate to="profile" replace />} /> 
+                
+                {/* User-specific routes */}
                 <Route path="profile" element={<Profile />} />
                 <Route path="my-requests" element={<MyRequests />} />
-                <Route path="requests-to-me" element={<RequestsToMe/>} />
+                <Route path="requests-to-me" element={<RequestsToMe />} />
                 <Route path="change-password" element={<ChangePassword />} />
+                
+                {/* Admin-specific routes */}
+                <Route path="overview" element={<DashboardOverview />} />
+                <Route path="users" element={<UserManagement />} />
               </Route>
-            </Route>
-
- {/* Private Admin Routes */}
-            <Route element={<AdminRoute />}>
-                <Route path="/admin" element={<AdminDashboardPage />}>
-                    <Route index element={<Navigate to="overview" replace />} />
-                    <Route path="overview" element={<DashboardOverview />} />
-                    <Route path="users" element={<UserManagement />} />
-                </Route>
             </Route>
 
 
